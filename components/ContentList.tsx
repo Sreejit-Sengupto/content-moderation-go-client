@@ -11,8 +11,6 @@ export function ContentList() {
     const setContents = useContentStore((state) => state.setContents);
     const [loading, setLoading] = useState(true);
 
-    console.log(contents);
-
 
     useEffect(() => {
         const fetchContent = async () => {
