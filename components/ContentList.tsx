@@ -11,6 +11,9 @@ export function ContentList() {
     const setContents = useContentStore((state) => state.setContents);
     const [loading, setLoading] = useState(true);
 
+    console.log(contents);
+
+
     useEffect(() => {
         const fetchContent = async () => {
             try {
@@ -64,7 +67,7 @@ export function ContentList() {
                             ID: {content.ID.substring(0, 8)}...
                         </CardTitle>
                         <Badge className={getStatusColor(content.FinalStatus)}>
-                            {content.FinalStatus}
+                            {!content.FinalStatus ? "PENDING" : content.FinalStatus}
                         </Badge>
                     </CardHeader>
                     <CardContent>
