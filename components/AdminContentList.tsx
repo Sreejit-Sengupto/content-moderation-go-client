@@ -23,6 +23,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import api from "@/lib/api";
+import Link from "next/link";
 
 export function AdminContentList() {
     const contents = useContentStore((state) => state.contents);
@@ -57,10 +58,10 @@ export function AdminContentList() {
 
     const handleReview = (content: Content) => {
         setSelectedContent(content);
-        setTextStatus(content.TextStatus);
-        setImageStatus(content.ImageStatus);
-        setVideoStatus(content.VideoStatus);
-        setFinalStatus(content.FinalStatus);
+        setTextStatus(content.textStatus);
+        setImageStatus(content.imageStatus);
+        setVideoStatus(content.videoStatus);
+        setFinalStatus(content.finalStatus);
         setReason("");
         setIsModalOpen(true);
     };
@@ -70,7 +71,7 @@ export function AdminContentList() {
 
         try {
             await api.patch("/content/update", {
-                contentId: selectedContent.ID,
+                contentId: selectedContent.id,
                 textStatus,
                 imageStatus,
                 videoStatus,
@@ -124,33 +125,40 @@ export function AdminContentList() {
                         </TableHeader>
                         <TableBody>
                             {contents.map((content) => (
-                                <TableRow key={content.ID}>
+                                <TableRow key={content.id}>
                                     <TableCell className="font-mono text-xs">
-                                        {content.ID.substring(0, 8)}...
+                                        {content.id.substring(0, 8)}...
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex gap-1">
-                                            {content.Text && <Badge variant="outline">TXT</Badge>}
-                                            {content.Image && <Badge variant="outline">IMG</Badge>}
-                                            {content.Video && <Badge variant="outline">VID</Badge>}
+                                            {content.text && <Badge variant="outline">TXT</Badge>}
+                                            {content.image && <Badge variant="outline">IMG</Badge>}
+                                            {content.video && <Badge variant="outline">VID</Badge>}
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <Badge className={getStatusColor(content.FinalStatus)}>
-                                            {content.FinalStatus}
+                                        <Badge className={getStatusColor(content.finalStatus)}>
+                                            {content.finalStatus}
                                         </Badge>
                                     </TableCell>
                                     <TableCell>
-                                        {new Date(content.CreatedAt).toLocaleDateString()}
+                                        {new Date(content.createdAt).toLocaleDateString()}
                                     </TableCell>
                                     <TableCell>
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            onClick={() => handleReview(content)}
-                                        >
-                                            Review
-                                        </Button>
+                                        <div className="flex gap-2">
+                                            <Link href={`/admin/content/${content.id}`}>
+                                                <Button variant="outline" size="sm">
+                                                    View Details
+                                                </Button>
+                                            </Link>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => handleReview(content)}
+                                            >
+                                                Review
+                                            </Button>
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -168,23 +176,23 @@ export function AdminContentList() {
                         <div className="grid gap-6 mb-6">
                             {/* Content Display */}
                             <div className="space-y-4 p-4 bg-muted rounded-md">
-                                {selectedContent.Image && (
+                                {selectedContent.image && (
                                     <div>
                                         <Label>Image</Label>
                                         <div className="mt-2 aspect-video relative rounded-md overflow-hidden bg-black/10">
                                             <img
-                                                src={selectedContent.Image}
+                                                src={selectedContent.image}
                                                 alt="Content"
                                                 className="object-contain w-full h-full"
                                             />
                                         </div>
                                     </div>
                                 )}
-                                {selectedContent.Text && (
+                                {selectedContent.text && (
                                     <div>
                                         <Label>Text</Label>
                                         <p className="mt-1 p-2 bg-background rounded border text-sm">
-                                            {selectedContent.Text}
+                                            {selectedContent.text}
                                         </p>
                                     </div>
                                 )}

@@ -59,33 +59,33 @@ export function ContentList() {
     return (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {contents.map((content) => (
-                <Card key={content.ID} className="overflow-hidden">
+                <Card key={content.id} className="overflow-hidden">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
-                            ID: {content.ID.substring(0, 8)}...
+                            ID: {content.id.substring(0, 8)}...
                         </CardTitle>
-                        <Badge className={getStatusColor(content.FinalStatus)}>
-                            {!content.FinalStatus ? "PENDING" : content.FinalStatus}
+                        <Badge className={getStatusColor(content.finalStatus)}>
+                            {!content.finalStatus ? "PENDING" : content.finalStatus}
                         </Badge>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4 mt-2">
-                            {content.Image && (
+                            {content.image && (
                                 <div className="aspect-video relative rounded-md overflow-hidden bg-muted">
                                     <img
-                                        src={content.Image}
+                                        src={content.image}
                                         alt="Content"
                                         className="object-cover w-full h-full"
                                     />
                                 </div>
                             )}
-                            {content.Text && (
+                            {content.text && (
                                 <p className="text-sm text-muted-foreground line-clamp-3">
-                                    {content.Text}
+                                    {content.text}
                                 </p>
                             )}
                             <div className="text-xs text-muted-foreground pt-2">
-                                Uploaded {new Date(content.CreatedAt).toLocaleDateString()}
+                                Uploaded {new Date(content.createdAt).toLocaleDateString()}
                             </div>
                         </div>
                     </CardContent>
