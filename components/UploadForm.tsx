@@ -175,8 +175,8 @@ export function UploadForm() {
             });
 
             addContent({
-                Text: values.text,
-                Image: imageUrl,
+                text: values.text,
+                image: imageUrl,
             });
 
             router.push("/dashboard");
